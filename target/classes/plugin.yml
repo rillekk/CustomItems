@@ -1,0 +1,8 @@
+name: CustomItems
+author: Rillekk
+version: 1.0
+main: net.rillekk.customitems.CustomItems
+depend: [SmartInvs, Vault]
+commands:
+  axt:
+  shopgui:
