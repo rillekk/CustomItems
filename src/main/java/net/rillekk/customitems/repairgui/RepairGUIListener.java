@@ -1,4 +1,4 @@
-package net.rillekk.customitems.repairGUI;
+package net.rillekk.customitems.repairgui;
 
 
 import net.rillekk.customitems.CustomItems;
