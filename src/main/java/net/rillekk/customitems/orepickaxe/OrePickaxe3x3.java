@@ -47,8 +47,8 @@ public class OrePickaxe3x3 implements Listener, Item {
     private ItemStack orePickaxe3x3;
     private ItemStack orePickaxe3x3WithNBT;
 
-    private final String name = "OrePickaxe3x3";
-    private final String nbtTag = "OrePickaxe3x3";
+    private final String name = "§6§lOrePickaxe3x3";
+    private final String nbtTag = "§6§lOrePickaxe3x3";
 
     private final HashMap<String, BlockFace> faces = new HashMap<>();
 
@@ -64,7 +64,7 @@ public class OrePickaxe3x3 implements Listener, Item {
 
     private OrePickaxe3x3(CustomItems plugin, String nbtTag) {
         this.plugin = plugin;
-        orePickaxe3x3WithNBT = new ItemStack(Material.DIAMOND_HOE);
+        orePickaxe3x3WithNBT = new ItemStack(Material.DIAMOND_PICKAXE);
         NBTItem nbtItem = new NBTItem(orePickaxe3x3WithNBT);
         nbtItem.setString(this.nbtTag + nbtTag, "CustomItem");
         ItemMeta orePickaxe3x3WithNBTMeta = nbtItem.getItem().getItemMeta();
@@ -113,7 +113,7 @@ public class OrePickaxe3x3 implements Listener, Item {
         if (handItem.getType().equals(Material.DIAMOND_PICKAXE)) {
             NBTItem nbtItem = new NBTItem(handItem);
 
-            if (nbtItem.hasKey(nbtTag)) {
+            if (nbtItem.hasKey(nbtTag) || nbtItem.hasKey(nbtTag + ".1") || nbtItem.hasKey(nbtTag + ".2")) {
                 Block block = event.getBlock();
                 event.setCancelled(true);
                 block.breakNaturally();

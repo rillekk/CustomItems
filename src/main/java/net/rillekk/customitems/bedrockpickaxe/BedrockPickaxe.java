@@ -2,7 +2,6 @@ package net.rillekk.customitems.bedrockpickaxe;
 
 
 import net.rillekk.customitems.CustomItems;
-import net.rillekk.customitems.areahoe.AreaHoe;
 import net.rillekk.customitems.items.Item;
 
 import de.tr7zw.nbtapi.*;
@@ -45,8 +44,8 @@ public class BedrockPickaxe implements Listener, Item, CommandExecutor {
     private ItemStack bedrockPickaxe;
     private ItemStack bedrockPickaxeWithNBT;
 
-    private final String name = "BedrockPickaxe";
-    private final String nbtTag = "BedrockPickaxe";
+    private final String name = "§6§lBedrockPickaxe";
+    private final String nbtTag = "§6§lBedrockPickaxe";
 
     Economy economy = CustomItems.getEconomy();
 
@@ -62,7 +61,7 @@ public class BedrockPickaxe implements Listener, Item, CommandExecutor {
 
     private BedrockPickaxe(CustomItems plugin, String nbtTag) {
         this.plugin = plugin;
-        bedrockPickaxeWithNBT = new ItemStack(Material.DIAMOND_HOE);
+        bedrockPickaxeWithNBT = new ItemStack(Material.DIAMOND_PICKAXE);
         NBTItem nbtItem = new NBTItem(bedrockPickaxeWithNBT);
         nbtItem.setString(this.nbtTag + nbtTag, "CustomItem");
         ItemMeta bedrockPickaxeWithNBTMeta = nbtItem.getItem().getItemMeta();
@@ -99,7 +98,7 @@ public class BedrockPickaxe implements Listener, Item, CommandExecutor {
         if (handItem.getType().equals(Material.DIAMOND_PICKAXE)) {
             NBTItem nbtItem = new NBTItem(handItem);
 
-            if (nbtItem.hasKey(nbtTag)) {
+            if (nbtItem.hasKey(nbtTag) || nbtItem.hasKey(nbtTag + ".1") || nbtItem.hasKey(nbtTag + ".2")) {
                 Block block = event.getBlock();
 
                 event.setCancelled(true);

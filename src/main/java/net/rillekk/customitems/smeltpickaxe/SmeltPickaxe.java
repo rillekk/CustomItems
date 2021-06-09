@@ -2,7 +2,6 @@ package net.rillekk.customitems.smeltpickaxe;
 
 
 import net.rillekk.customitems.CustomItems;
-import net.rillekk.customitems.areahoe.AreaHoe;
 import net.rillekk.customitems.items.Item;
 
 import de.tr7zw.nbtapi.NBTItem;
@@ -40,8 +39,8 @@ public class SmeltPickaxe extends ItemStack implements Item, Listener {
     private ItemStack smeltPickaxe;
     private ItemStack smeltPickaxeWithNBT;
 
-    private String name = "SmeltPickaxe";
-    private String nbtTag = "SmeltPickaxe";
+    private String name = "§6§lSmeltPickaxe";
+    private String nbtTag = "§6§lSmeltPickaxe";
 
     public SmeltPickaxe(CustomItems plugin) {
         this.plugin = plugin;
@@ -55,7 +54,7 @@ public class SmeltPickaxe extends ItemStack implements Item, Listener {
 
     private SmeltPickaxe(CustomItems plugin, String nbtTag) {
         this.plugin = plugin;
-        smeltPickaxeWithNBT = new ItemStack(Material.DIAMOND_HOE);
+        smeltPickaxeWithNBT = new ItemStack(Material.DIAMOND_PICKAXE);
         NBTItem nbtItem = new NBTItem(smeltPickaxeWithNBT);
         nbtItem.setString(this.nbtTag + nbtTag, "CustomItem");
         ItemMeta smeltPickaxeWithNBTMeta = nbtItem.getItem().getItemMeta();
@@ -90,7 +89,7 @@ public class SmeltPickaxe extends ItemStack implements Item, Listener {
         if (handItem.getType().equals(Material.DIAMOND_PICKAXE)) {
             NBTItem nbtItem = new NBTItem(handItem);
 
-            if (nbtItem.hasKey(nbtTag)) {
+            if (nbtItem.hasKey(nbtTag) || nbtItem.hasKey(nbtTag + ".1") || nbtItem.hasKey(nbtTag + ".2")) {
                 Block block = event.getBlock();
 
                 switch (block.getType()) {

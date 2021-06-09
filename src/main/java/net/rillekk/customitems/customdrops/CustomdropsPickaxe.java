@@ -2,7 +2,6 @@ package net.rillekk.customitems.customdrops;
 
 
 import net.rillekk.customitems.CustomItems;
-import net.rillekk.customitems.areahoe.AreaHoe;
 import net.rillekk.customitems.items.Item;
 
 import de.tr7zw.nbtapi.NBTItem;
@@ -43,8 +42,8 @@ public class CustomdropsPickaxe implements Listener, Item {
     private ItemStack customdropsPickaxe;
     private ItemStack customdropsPickaxeWithNBT;
 
-    private final String name = "CustomdropsPickaxe";
-    private final String nbtTag = "CustomdropsPickaxe";
+    private final String name = "§6§lCustomdropsPickaxe";
+    private final String nbtTag = "§6§lCustomdropsPickaxe";
 
     public CustomdropsPickaxe(CustomItems plugin) {
         this.plugin = plugin;
@@ -58,7 +57,7 @@ public class CustomdropsPickaxe implements Listener, Item {
 
     private CustomdropsPickaxe(CustomItems plugin, String nbtTag) {
         this.plugin = plugin;
-        customdropsPickaxeWithNBT = new ItemStack(Material.DIAMOND_HOE);
+        customdropsPickaxeWithNBT = new ItemStack(Material.DIAMOND_PICKAXE);
         NBTItem nbtItem = new NBTItem(customdropsPickaxeWithNBT);
         nbtItem.setString(this.nbtTag + nbtTag, "CustomItem");
         ItemMeta customdropsPickaxeWithNBTMeta = nbtItem.getItem().getItemMeta();
@@ -93,7 +92,7 @@ public class CustomdropsPickaxe implements Listener, Item {
         if (handItem.getType().equals(Material.DIAMOND_PICKAXE)) {
             NBTItem nbtItem = new NBTItem(handItem);
 
-            if (nbtItem.hasKey(nbtTag)) {
+            if (nbtItem.hasKey(nbtTag) || nbtItem.hasKey(nbtTag + ".1") || nbtItem.hasKey(nbtTag + ".2")) {
                 Block block = event.getBlock();
 
                 Location blockLocation = block.getLocation();

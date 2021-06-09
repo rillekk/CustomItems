@@ -20,6 +20,7 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.Random;
 
@@ -127,11 +128,21 @@ public class ShopGUIProvider implements InventoryProvider, Listener {
                 }));
 
 
-        contents.set(1, 1, ClickableItem.of(new ItemStack(Material.INK_SACK, 1, (short) 1),
+        ItemStack backItem = new ItemStack(Material.INK_SACK, 1, (short) 1);
+        ItemMeta backMeta = backItem.getItemMeta();
+        backMeta.setDisplayName("§c§lZurück");
+        backItem.setItemMeta(backMeta);
+
+        contents.set(1, 1, ClickableItem.of(new ItemStack(backItem),
                 e -> player.closeInventory()));
 
 
-        contents.set(1, 7, ClickableItem.of(new ItemStack(Material.ANVIL),
+        ItemStack repairItem = new ItemStack(Material.ANVIL);
+        ItemMeta repairItemMeta = repairItem.getItemMeta();
+        repairItemMeta.setDisplayName("§6§lReparieren");
+        repairItem.setItemMeta(repairItemMeta);
+
+        contents.set(1, 7, ClickableItem.of(new ItemStack(repairItem),
                 e -> {
                     if (player.hasPermission("ttools.repair")) {
                         player.openInventory(plugin.getRepairInventory());

@@ -26,7 +26,7 @@ import org.bukkit.entity.Player;
 
 public class ShopGUI implements CommandExecutor {
     private final CustomItems plugin;
-    private final String guiName = "ShopGUI";
+    private final String guiName = "§6§lToastTools";
 
     public ShopGUI(CustomItems plugin) {
         this.plugin = plugin;

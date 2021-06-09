@@ -2,7 +2,6 @@ package net.rillekk.customitems.timberaxe;
 
 
 import net.rillekk.customitems.CustomItems;
-import net.rillekk.customitems.areahoe.AreaHoe;
 import net.rillekk.customitems.items.Item;
 
 import de.tr7zw.nbtapi.NBTItem;
@@ -39,8 +38,8 @@ public class TimberAxe implements Item, Listener {
     private ItemStack timberAxe;
     private ItemStack timberAxeWithNBT;
 
-    private final String name = "TimberAxt";
-    private final String nbtTag = "TimberAxt";
+    private final String name = "§6§lTimberAxt";
+    private final String nbtTag = "§6§lTimberAxt";
 
     public TimberAxe(CustomItems plugin) {
         this.plugin = plugin;
@@ -54,7 +53,7 @@ public class TimberAxe implements Item, Listener {
 
     private TimberAxe(CustomItems plugin, String nbtTag) {
         this.plugin = plugin;
-        timberAxeWithNBT = new ItemStack(Material.DIAMOND_HOE);
+        timberAxeWithNBT = new ItemStack(Material.DIAMOND_AXE);
         NBTItem nbtItem = new NBTItem(timberAxeWithNBT);
         nbtItem.setString(this.nbtTag + nbtTag, "CustomItem");
         ItemMeta timberAxeWithNBTMeta = nbtItem.getItem().getItemMeta();
@@ -90,7 +89,7 @@ public class TimberAxe implements Item, Listener {
             if (handItem.getType().equals(Material.DIAMOND_AXE)) {
                 NBTItem nbtItem = new NBTItem(handItem);
 
-                if (nbtItem.hasKey(nbtTag)) {
+                if (nbtItem.hasKey(nbtTag) || nbtItem.hasKey(nbtTag + ".1") || nbtItem.hasKey(nbtTag + ".2")) {
                     event.setCancelled(true);
                     new FellingTree(event.getBlock().getLocation());
                 }

@@ -42,8 +42,8 @@ public class AreaHoe implements Item, Listener {
     private ItemStack areaHoe;
     private ItemStack areaHoeWithNBT;
 
-    private String name = "AreaHoe";
-    private String nbtTag = "AreaHoe";
+    private String name = "§6§lAreaHoe";
+    private String nbtTag = "§6§lAreaHoe";
 
     public AreaHoe(CustomItems plugin) {
         this.plugin = plugin;
@@ -78,7 +78,6 @@ public class AreaHoe implements Item, Listener {
     public ItemStack getAreaHoe() {
         return this.areaHoe;
     }
-
     public ItemStack getAreaHoeWithNBT() {
         return areaHoeWithNBT;
     }

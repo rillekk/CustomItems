@@ -5,7 +5,6 @@ net\rillekk\customitems\orepickaxe\OrePickaxe3x3.class
 net\rillekk\customitems\timberaxe\TimberAxe.class
 net\rillekk\customitems\shopgui\ShopGUI.class
 net\rillekk\customitems\items\Item.class
-net\rillekk\customitems\listener\AntiAnvilCraft.class
 net\rillekk\customitems\repairGUI\RepairGUI.class
 net\rillekk\customitems\utils\BlockfaceCheck$1.class
 net\rillekk\customitems\CustomItems.class
