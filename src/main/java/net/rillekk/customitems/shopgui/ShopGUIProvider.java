@@ -17,8 +17,8 @@ import net.milkbowl.vault.economy.Economy;
 import net.milkbowl.vault.economy.EconomyResponse;
 
 import org.bukkit.Material;
-import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
+import org.bukkit.event.Listener;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.Random;
@@ -37,7 +37,7 @@ import java.util.Random;
  ***************************************************************/
 
 
-public class ShopGUIProvider implements InventoryProvider {
+public class ShopGUIProvider implements InventoryProvider, Listener {
     private final CustomItems plugin;
 
     public ShopGUIProvider(CustomItems plugin) {
@@ -46,52 +46,99 @@ public class ShopGUIProvider implements InventoryProvider {
 
     private final Random random = new Random();
     private final Economy economy = CustomItems.getEconomy();
-    public Integer areaHoeCost = -10;
+
+    public Integer areaHoeCost = 10;
+    public Integer bedrockPickaxeCost = 10;
+    public Integer customdropsPickaxeCost = 10;
+    public Integer smeltPickaxeCost = 10;
+    public Integer orePickaxe3x3Cost = 10;
+    public Integer timberAxeCost = 10;
 
     @Override
     public void init(Player player, InventoryContents contents) {
-
-        boolean economyCheck = plugin.setupEconomy();
-        System.out.println("Das ist der ecoCheck: " + economyCheck);
         contents.fillBorders(ClickableItem.empty(new ItemStack(Material.STAINED_GLASS_PANE)));
-        OfflinePlayer offlinePlayer = player;
 
         AreaHoe areaHoe = new AreaHoe(this.plugin);
-        contents.set(1, 1, ClickableItem.of(areaHoe.getAreaHoe(),
+        contents.set(3, 1, ClickableItem.of(areaHoe.getAreaHoe(),
                 e -> {
-                    EconomyResponse resp = this.economy.depositPlayer(offlinePlayer, areaHoeCost);
+                    EconomyResponse resp = this.economy.withdrawPlayer(player, areaHoeCost);
                     if (resp.transactionSuccess()) {
                         player.getInventory().addItem(areaHoe.getAreaHoe());
                     } else {
-                        player.sendMessage(plugin.getPrefix() + "§d Du hast nicht genügend Geld dafür!");
+                        player.sendMessage(plugin.getPrefix() + "§dDu hast nicht genügend Geld dafür!");
                     }
                 }));
 
         BedrockPickaxe bedrockPickaxe = new BedrockPickaxe(this.plugin);
-        contents.set(1, 4, ClickableItem.of(bedrockPickaxe.getBedrockPickaxe(),
-                e -> player.getInventory().addItem(bedrockPickaxe.getBedrockPickaxe())));
+        contents.set(3, 2, ClickableItem.of(bedrockPickaxe.getBedrockPickaxe(),
+                e -> {
+                    EconomyResponse resp = this.economy.withdrawPlayer(player, bedrockPickaxeCost);
+                    if (resp.transactionSuccess()) {
+                        player.getInventory().addItem(bedrockPickaxe.getBedrockPickaxe());
+                    } else {
+                        player.sendMessage(plugin.getPrefix() + "§dDu hast nicht genügend Geld dafür!");
+                    }
+                }));
 
 
         CustomdropsPickaxe customdropsPickaxe = new CustomdropsPickaxe(this.plugin);
-        contents.set(1, 7, ClickableItem.of(customdropsPickaxe.getCustomdrpsPickaxe(),
-                e -> player.getInventory().addItem(customdropsPickaxe.getCustomdrpsPickaxe())));
+        contents.set(3, 3, ClickableItem.of(customdropsPickaxe.getCustomdrpsPickaxe(),
+                e -> {
+                    EconomyResponse resp = this.economy.withdrawPlayer(player, customdropsPickaxeCost);
+                    if (resp.transactionSuccess()) {
+                        player.getInventory().addItem(customdropsPickaxe.getCustomdrpsPickaxe());
+                    } else {
+                        player.sendMessage(plugin.getPrefix() + "§dDu hast nicht genügend Geld dafür!");
+                    }
+                }));
 
         OrePickaxe3x3 orePickaxe3x3 = new OrePickaxe3x3(this.plugin);
-        contents.set(3, 1, ClickableItem.of(orePickaxe3x3.getOrePickaxe3x3(),
-                e -> player.getInventory().addItem(orePickaxe3x3.getOrePickaxe3x3())));
+        contents.set(3, 5, ClickableItem.of(orePickaxe3x3.getOrePickaxe3x3(),
+                e -> {
+                    EconomyResponse resp = this.economy.withdrawPlayer(player, orePickaxe3x3Cost);
+                    if (resp.transactionSuccess()) {
+                        player.getInventory().addItem(orePickaxe3x3.getOrePickaxe3x3());
+                    } else {
+                        player.sendMessage(plugin.getPrefix() + "§dDu hast nicht genügend Geld dafür!");
+                    }
+                }));
 
         SmeltPickaxe smeltPickaxe = new SmeltPickaxe(this.plugin);
-        contents.set(3, 4, ClickableItem.of(smeltPickaxe.getSmeltPickaxe(),
-                e -> player.getInventory().addItem(smeltPickaxe.getSmeltPickaxe())));
+        contents.set(3, 6, ClickableItem.of(smeltPickaxe.getSmeltPickaxe(),
+                e -> {
+                    EconomyResponse resp = this.economy.withdrawPlayer(player, smeltPickaxeCost);
+                    if (resp.transactionSuccess()) {
+                        player.getInventory().addItem(smeltPickaxe.getSmeltPickaxe());
+                    } else {
+                        player.sendMessage(plugin.getPrefix() + "§dDu hast nicht genügend Geld dafür!");
+                    }
+                }));
 
 
         TimberAxe timberAxe = new TimberAxe(this.plugin);
         contents.set(3, 7, ClickableItem.of(timberAxe.getTimberAxe(),
-                e -> player.getInventory().addItem(timberAxe.getTimberAxe())));
+                e -> {
+                    EconomyResponse resp = this.economy.withdrawPlayer(player, timberAxeCost);
+                    if (resp.transactionSuccess()) {
+                        player.getInventory().addItem(timberAxe.getTimberAxe());
+                    } else {
+                        player.sendMessage(plugin.getPrefix() + "§dDu hast nicht genügend Geld dafür!");
+                    }
+                }));
 
 
-        contents.set(4, 8, ClickableItem.of(new ItemStack(Material.BARRIER),
+        contents.set(1, 1, ClickableItem.of(new ItemStack(Material.INK_SACK, 1, (short) 1),
                 e -> player.closeInventory()));
+
+
+        contents.set(1, 7, ClickableItem.of(new ItemStack(Material.ANVIL),
+                e -> {
+                    if (player.hasPermission("ttools.repair")) {
+                        player.openInventory(plugin.getRepairInventory());
+                    } else {
+                        player.sendMessage(plugin.getPrefix() + "§dDazu hast du keine Berechtigung!");
+                    }
+                }));
     }
 
     @Override

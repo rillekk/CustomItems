@@ -2,23 +2,26 @@ package net.rillekk.customitems.bedrockpickaxe;
 
 
 import net.rillekk.customitems.CustomItems;
+import net.rillekk.customitems.areahoe.AreaHoe;
 import net.rillekk.customitems.items.Item;
 
 import de.tr7zw.nbtapi.*;
 
 import net.milkbowl.vault.economy.Economy;
-import net.milkbowl.vault.economy.EconomyResponse;
-
 
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.inventory.AnvilInventory;
+import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -38,10 +41,14 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 public class BedrockPickaxe implements Listener, Item, CommandExecutor {
     private final CustomItems plugin;
-    private final ItemStack bedrockPickaxe;
+
+    private ItemStack bedrockPickaxe;
+    private ItemStack bedrockPickaxeWithNBT;
+
+    private final String name = "BedrockPickaxe";
+    private final String nbtTag = "BedrockPickaxe";
+
     Economy economy = CustomItems.getEconomy();
-
-
 
     public BedrockPickaxe(CustomItems plugin) {
         this.plugin = plugin;
@@ -53,13 +60,24 @@ public class BedrockPickaxe implements Listener, Item, CommandExecutor {
         bedrockPickaxe.setItemMeta(bedrockPickaxeMeta);
     }
 
+    private BedrockPickaxe(CustomItems plugin, String nbtTag) {
+        this.plugin = plugin;
+        bedrockPickaxeWithNBT = new ItemStack(Material.DIAMOND_HOE);
+        NBTItem nbtItem = new NBTItem(bedrockPickaxeWithNBT);
+        nbtItem.setString(this.nbtTag + nbtTag, "CustomItem");
+        ItemMeta bedrockPickaxeWithNBTMeta = nbtItem.getItem().getItemMeta();
+        bedrockPickaxeWithNBTMeta.setDisplayName(this.name);
+        bedrockPickaxeWithNBT.setItemMeta(bedrockPickaxeWithNBTMeta);
+    }
+
+
 
     public ItemStack getBedrockPickaxe() {
         return bedrockPickaxe;
     }
-
-    private final String name = "BedrockPickaxe";
-    private final String nbtTag = "BedrockPickaxe";
+    public ItemStack getBedrockPickaxeWithNBT() {
+        return bedrockPickaxeWithNBT;
+    }
 
 
     @Override
@@ -121,8 +139,83 @@ public class BedrockPickaxe implements Listener, Item, CommandExecutor {
             ItemMeta bedrockPicke = nbtItem.getItem().getItemMeta();
             player.getItemInHand().setItemMeta(bedrockPicke);
 
-            EconomyResponse resp = this.economy.depositPlayer(offlinePlayer, 1000);
+            this.economy.depositPlayer(player, 1000);
+
+            player.sendMessage("Das ist dein Money: " + this.economy.getBalance(offlinePlayer));
         }
         return false;
+    }
+
+    @EventHandler
+    public void onAnvilInventoryClick(InventoryClickEvent event) {
+        HumanEntity humanEntity = event.getWhoClicked();
+
+        if (humanEntity instanceof Player) {
+            Inventory clickedInventory = event.getClickedInventory();
+
+            if (clickedInventory instanceof AnvilInventory) {
+                Player player = (Player) humanEntity;
+
+                if (event.getSlot() == 2) {
+                    AnvilInventory anvilInventory = (AnvilInventory) clickedInventory;
+
+                    ItemStack slotOneItemStack = anvilInventory.getItem(0);
+                    ItemStack slotTwoItemStack = anvilInventory.getItem(1);
+                    NBTItem nbtItemSlotOne = new NBTItem(slotOneItemStack);
+                    NBTItem nbtItemSlotTwo = new NBTItem(slotTwoItemStack);
+
+                    if (slotOneItemStack.equals(this.getBedrockPickaxe()) ||
+                            nbtItemSlotOne.hasKey(this.nbtTag + ".1") ||
+                            nbtItemSlotOne.hasKey(this.nbtTag + ".2") ||
+                            slotTwoItemStack.equals(this.getBedrockPickaxe()) ||
+                            nbtItemSlotTwo.hasKey(this.nbtTag + ".1") ||
+                            nbtItemSlotTwo.hasKey(this.nbtTag + ".2")) {
+
+                        if (player.hasPermission("ttools.enchant.2")) {
+                            if (nbtItemSlotOne.hasKey(this.nbtTag() + ".1") || nbtItemSlotTwo.hasKey(this.nbtTag() + ".1")) {
+                                BedrockPickaxe resultItem = new BedrockPickaxe(this.plugin, ".2");
+                                anvilInventory.setItem(2, resultItem.getBedrockPickaxeWithNBT());
+
+                                player.sendMessage(this.plugin.getPrefix() + "§dDu kannst die " + resultItem.getBedrockPickaxeWithNBT().getItemMeta().getDisplayName() + " nicht mehr im Amboss benutzen!");
+
+                            } else if (nbtItemSlotOne.hasKey(this.nbtTag()) || nbtItemSlotTwo.hasKey(this.nbtTag())) {
+                                BedrockPickaxe resultItem = new BedrockPickaxe(this.plugin, ".1");
+                                anvilInventory.setItem(2, resultItem.getBedrockPickaxeWithNBT());
+
+                                player.sendMessage(this.plugin.getPrefix() + "§dDu kannst die " + resultItem.getBedrockPickaxeWithNBT().getItemMeta().getDisplayName() + " noch ein Mal im Amboss benutzen!");
+                            } else {
+                                event.setCancelled(true);
+                                player.closeInventory();
+                                player.sendMessage(plugin.getPrefix() + "§dDu kannst dieses Item nicht im Amboss benutzen!");
+                            }
+
+
+                        } else if (player.hasPermission("ttools.enchant.1")) {
+                            if (nbtItemSlotOne.hasKey(this.nbtTag()) || nbtItemSlotTwo.hasKey(this.nbtTag())) {
+                                BedrockPickaxe resultItem = new BedrockPickaxe(this.plugin, ".1");
+                                anvilInventory.setItem(2, resultItem.getBedrockPickaxeWithNBT());
+
+                                player.sendMessage(this.plugin.getPrefix() + "§dDu kannst die " + resultItem.getBedrockPickaxeWithNBT().getItemMeta().getDisplayName() + " nicht mehr im Amboss benutzen!");
+
+                            } else if (nbtItemSlotOne.hasKey(this.nbtTag() + ".2") || nbtItemSlotTwo.hasKey(this.nbtTag() + ".2")) {
+                                event.setCancelled(true);
+                                player.closeInventory();
+                                player.sendMessage(plugin.getPrefix() + "§dDu kannst dieses Item nicht nochmal im Amboss benutzen!");
+
+                            } else {
+                                event.setCancelled(true);
+                                player.closeInventory();
+                                player.sendMessage(plugin.getPrefix() + "§dDu kannst dieses Item nicht im Amboss benutzen!");
+                            }
+
+                        } else {
+                            event.setCancelled(true);
+                            player.closeInventory();
+                            player.sendMessage(plugin.getPrefix() + "§dDu hast keine Berechtigung dazu, dieses Item im Amboss zu benutzen!");
+                        }
+                    }
+                }
+            }
+        }
     }
 }

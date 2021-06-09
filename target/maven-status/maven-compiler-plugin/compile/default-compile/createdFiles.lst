@@ -4,8 +4,9 @@ net\rillekk\customitems\smeltpickaxe\SmeltPickaxe$1.class
 net\rillekk\customitems\orepickaxe\OrePickaxe3x3.class
 net\rillekk\customitems\timberaxe\TimberAxe.class
 net\rillekk\customitems\shopgui\ShopGUI.class
-net\rillekk\customitems\shopgui\ShopGUIOpener.class
 net\rillekk\customitems\items\Item.class
+net\rillekk\customitems\listener\AntiAnvilCraft.class
+net\rillekk\customitems\repairGUI\RepairGUI.class
 net\rillekk\customitems\utils\BlockfaceCheck$1.class
 net\rillekk\customitems\CustomItems.class
 net\rillekk\customitems\customdrops\CustomdropsPickaxe$1.class
@@ -14,4 +15,5 @@ net\rillekk\customitems\customdrops\CustomdropsPickaxe.class
 net\rillekk\customitems\areahoe\AreaHoe$1.class
 net\rillekk\customitems\areahoe\AreaHoe.class
 net\rillekk\customitems\smeltpickaxe\SmeltPickaxe.class
+net\rillekk\customitems\repairGUI\RepairGUIListener.class
 net\rillekk\customitems\shopgui\ShopGUIProvider.class

@@ -1,7 +1,10 @@
 package net.rillekk.customitems.shopgui;
 
-import fr.minuskube.inv.SmartInventory;
+
 import net.rillekk.customitems.CustomItems;
+
+import fr.minuskube.inv.SmartInventory;
+
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -22,24 +25,28 @@ import org.bukkit.entity.Player;
 
 
 public class ShopGUI implements CommandExecutor {
-    private CustomItems plugin;
+    private final CustomItems plugin;
+    private final String guiName = "ShopGUI";
+
     public ShopGUI(CustomItems plugin) {
         this.plugin = plugin;
+        plugin.setShopInventory(SmartInventory.builder()
+                .provider(new ShopGUIProvider(this.plugin))
+                .size(5, 9)
+                .title(guiName)
+                .build());
     }
 
-
-    public final SmartInventory INVENTORY = SmartInventory.builder()
-            .provider(new ShopGUIProvider(plugin))
-            .size(5, 9)
-            .title("ShopGUI")
-            .build();
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (sender instanceof Player) {
             Player player = (Player) sender;
-            ShopGUIOpener shopGUIOpener = new ShopGUIOpener();
-            INVENTORY.open(player);
+            if (player.hasPermission("ttools.use")) {
+                plugin.getShopInventory().open(player);
+            } else {
+                player.sendMessage(plugin.getPrefix() + "§dDazu hast du keine Berechtigung!");
+            }
         }
 
         return false;

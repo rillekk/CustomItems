@@ -1,18 +1,27 @@
 package net.rillekk.customitems;
 
 
-import lombok.Getter;
-import lombok.Setter;
-import net.milkbowl.vault.economy.Economy;
 import net.rillekk.customitems.areahoe.AreaHoe;
 import net.rillekk.customitems.customdrops.CustomdropsPickaxe;
 import net.rillekk.customitems.orepickaxe.OrePickaxe3x3;
+import net.rillekk.customitems.repairGUI.RepairGUI;
+import net.rillekk.customitems.repairGUI.RepairGUIListener;
 import net.rillekk.customitems.shopgui.ShopGUI;
+import net.rillekk.customitems.shopgui.ShopGUIProvider;
 import net.rillekk.customitems.smeltpickaxe.SmeltPickaxe;
 import net.rillekk.customitems.utils.BlockfaceCheck;
 import net.rillekk.customitems.bedrockpickaxe.BedrockPickaxe;
 import net.rillekk.customitems.timberaxe.TimberAxe;
+
+import fr.minuskube.inv.SmartInventory;
+
+import net.milkbowl.vault.economy.Economy;
+
+import lombok.Getter;
+import lombok.Setter;
+
 import org.bukkit.Bukkit;
+import org.bukkit.inventory.Inventory;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -44,6 +53,10 @@ public class CustomItems extends JavaPlugin {
     private BlockfaceCheck blockfaceCheck;
     private ExecutorService cachedThreadExecutor;
     public static Economy economy = null;
+    private RepairGUI repairGUI;
+    public String guiName;
+    public Inventory repairInventory;
+    public SmartInventory shopInventory;
 
     @Override
     public void onEnable() {
@@ -58,6 +71,8 @@ public class CustomItems extends JavaPlugin {
         this.prefix = "§eToastItems§e| ";
         this.blockfaceCheck = new BlockfaceCheck(this);
         this.cachedThreadExecutor = Executors.newCachedThreadPool();
+        this.repairGUI = new RepairGUI(this);
+
 
 
         super.getCommand("axt").setExecutor(new BedrockPickaxe(this));
@@ -70,6 +85,9 @@ public class CustomItems extends JavaPlugin {
         Bukkit.getPluginManager().registerEvents(new CustomdropsPickaxe(this), this);
         Bukkit.getPluginManager().registerEvents(new AreaHoe(this), this);
         Bukkit.getPluginManager().registerEvents(new BlockfaceCheck(this), this);
+        Bukkit.getPluginManager().registerEvents(new RepairGUIListener(this), this);
+        Bukkit.getPluginManager().registerEvents(new ShopGUIProvider(this), this);
+
     }
 
     public boolean setupEconomy() {
