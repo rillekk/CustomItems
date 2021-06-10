@@ -83,18 +83,6 @@ public class OrePickaxe3x3 implements Listener, Item {
     }
 
 
-    public ItemStack getOrePickaxe3x3() {
-        return this.orePickaxe3x3;
-    }
-
-    public ItemStack getOrePickaxe3x3WithNBT() {
-        return orePickaxe3x3WithNBT;
-    }
-
-    public BlockFace getBlockFaceByPlayerName(String name) {
-        return faces.get(name);
-    }
-
     @EventHandler
     public void saveBlockFace(PlayerInteractEvent event) {
         Player player = event.getPlayer();
@@ -203,6 +191,18 @@ public class OrePickaxe3x3 implements Listener, Item {
                 }
             }
         }
+    }
+
+    public ItemStack getOrePickaxe3x3() {
+        return this.orePickaxe3x3;
+    }
+
+    public ItemStack getOrePickaxe3x3WithNBT() {
+        return orePickaxe3x3WithNBT;
+    }
+
+    public BlockFace getBlockFaceByPlayerName(String name) {
+        return faces.get(name);
     }
 }
 

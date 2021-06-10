@@ -69,12 +69,6 @@ public class CustomdropsPickaxe implements Listener, Item {
         this.dropChance = plugin.getConfig().getInt("CustomdropsChance");
     }
 
-    public ItemStack getCustomdropsPickaxe() {
-        return this.customdropsPickaxe;
-    }
-    public ItemStack getCustomdropsPickaxeWithNBT() {
-        return customdropsPickaxeWithNBT;
-    }
 
     @Override
     public String name() {
@@ -199,4 +193,10 @@ public class CustomdropsPickaxe implements Listener, Item {
         }
     }
 
+    public ItemStack getCustomdropsPickaxe() {
+        return this.customdropsPickaxe;
+    }
+    public ItemStack getCustomdropsPickaxeWithNBT() {
+        return customdropsPickaxeWithNBT;
+    }
 }

@@ -72,12 +72,6 @@ public class TimberAxe implements Item, Listener {
     }
 
 
-    public ItemStack getTimberAxe() {
-        return this.timberAxe;
-    }
-    public ItemStack getTimberAxeWithNBT() {
-        return timberAxeWithNBT;
-    }
 
     @EventHandler
     public void onBreak(BlockBreakEvent event) {
@@ -168,5 +162,13 @@ public class TimberAxe implements Item, Listener {
                 }
             }
         }
+    }
+
+    public ItemStack getTimberAxe() {
+        return this.timberAxe;
+    }
+
+    public ItemStack getTimberAxeWithNBT() {
+        return timberAxeWithNBT;
     }
 }

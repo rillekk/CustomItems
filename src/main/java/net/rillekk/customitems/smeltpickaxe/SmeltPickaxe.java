@@ -74,13 +74,6 @@ public class SmeltPickaxe extends ItemStack implements Item, Listener {
     }
 
 
-    public ItemStack getSmeltPickaxe() {
-        return this.smeltPickaxe;
-    }
-    public ItemStack getSmeltPickaxeWithNBT() {
-        return smeltPickaxeWithNBT;
-    }
-
     @EventHandler
     public void onBreak(BlockBreakEvent event) {
         Player player = event.getPlayer();
@@ -178,5 +171,13 @@ public class SmeltPickaxe extends ItemStack implements Item, Listener {
                 }
             }
         }
+    }
+
+    public ItemStack getSmeltPickaxe() {
+        return this.smeltPickaxe;
+    }
+
+    public ItemStack getSmeltPickaxeWithNBT() {
+        return smeltPickaxeWithNBT;
     }
 }

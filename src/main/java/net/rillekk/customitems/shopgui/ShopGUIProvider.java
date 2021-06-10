@@ -40,12 +40,16 @@ import java.util.Random;
 
 public class ShopGUIProvider implements InventoryProvider, Listener {
     private final CustomItems plugin;
+
     private final Integer areaHoeCost;
     private final Integer bedrockPickaxeCost;
     private final Integer customdropsPickaxeCost;
     private final Integer smeltPickaxeCost;
     private final Integer orePickaxe3x3Cost;
     private final Integer timberAxeCost;
+
+    private final Random random = new Random();
+    private final Economy economy = CustomItems.getEconomy();
 
     public ShopGUIProvider(CustomItems plugin) {
         this.plugin = plugin;
@@ -56,9 +60,6 @@ public class ShopGUIProvider implements InventoryProvider, Listener {
         this.orePickaxe3x3Cost = plugin.getConfig().getInt("orePickaxe3x3Cost");
         this.timberAxeCost = plugin.getConfig().getInt("timberAxeCost");
     }
-
-    private final Random random = new Random();
-    private final Economy economy = CustomItems.getEconomy();
 
 
     @Override

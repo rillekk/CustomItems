@@ -63,14 +63,6 @@ public class BedrockPickaxe implements Listener, Item {
     }
 
 
-    public ItemStack getBedrockPickaxe() {
-        return bedrockPickaxe;
-    }
-    public ItemStack getBedrockPickaxeWithNBT() {
-        return bedrockPickaxeWithNBT;
-    }
-
-
     @Override
     public String name() {
         return this.name;
@@ -184,5 +176,13 @@ public class BedrockPickaxe implements Listener, Item {
                 }
             }
         }
+    }
+
+    public ItemStack getBedrockPickaxe() {
+        return bedrockPickaxe;
+    }
+
+    public ItemStack getBedrockPickaxeWithNBT() {
+        return bedrockPickaxeWithNBT;
     }
 }

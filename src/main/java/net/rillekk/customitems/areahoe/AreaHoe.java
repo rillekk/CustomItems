@@ -75,13 +75,6 @@ public class AreaHoe implements Item, Listener {
         return this.nbtTag;
     }
 
-    public ItemStack getAreaHoe() {
-        return this.areaHoe;
-    }
-    public ItemStack getAreaHoeWithNBT() {
-        return areaHoeWithNBT;
-    }
-
 
     @EventHandler
     public void onBreak(BlockBreakEvent event) {
@@ -219,5 +212,13 @@ public class AreaHoe implements Item, Listener {
                 }
             }
         }
+    }
+
+    public ItemStack getAreaHoe() {
+        return this.areaHoe;
+    }
+    
+    public ItemStack getAreaHoeWithNBT() {
+        return areaHoeWithNBT;
     }
 }
