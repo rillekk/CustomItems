@@ -6,13 +6,8 @@ import net.rillekk.customitems.items.Item;
 
 import de.tr7zw.nbtapi.*;
 
-import net.milkbowl.vault.economy.Economy;
-
 import org.bukkit.*;
 import org.bukkit.block.Block;
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
-import org.bukkit.command.CommandSender;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -38,7 +33,7 @@ import org.bukkit.inventory.meta.ItemMeta;
  ***************************************************************/
 
 
-public class BedrockPickaxe implements Listener, Item, CommandExecutor {
+public class BedrockPickaxe implements Listener, Item {
     private final CustomItems plugin;
 
     private ItemStack bedrockPickaxe;
@@ -46,8 +41,6 @@ public class BedrockPickaxe implements Listener, Item, CommandExecutor {
 
     private final String name = "§6§lBedrockPickaxe";
     private final String nbtTag = "§6§lBedrockPickaxe";
-
-    Economy economy = CustomItems.getEconomy();
 
     public BedrockPickaxe(CustomItems plugin) {
         this.plugin = plugin;
@@ -68,7 +61,6 @@ public class BedrockPickaxe implements Listener, Item, CommandExecutor {
         bedrockPickaxeWithNBTMeta.setDisplayName(this.name);
         bedrockPickaxeWithNBT.setItemMeta(bedrockPickaxeWithNBTMeta);
     }
-
 
 
     public ItemStack getBedrockPickaxe() {
@@ -104,46 +96,22 @@ public class BedrockPickaxe implements Listener, Item, CommandExecutor {
                 event.setCancelled(true);
                 block.breakNaturally();
 
-                Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                for (int x = -1; x <= 1; x++) {
+                    for (int z = -1; z <= 1; z++) {
+                        for (int y = 256; y >= 0; y--) {
+                            World blockWorld = block.getWorld();
+                            Block blockUnten = blockWorld.getBlockAt(block.getX() + x, block.getY() - y, block.getZ() + z);
 
-                    for (int x = -1; x <= 1; x++) {
-                        for (int z = -1; z <= 1; z++) {
-                            for (int y = 256; y >= 0; y--) {
-                                World blockWorld = block.getWorld();
-                                Block blockUnten = blockWorld.getBlockAt(block.getX() + x, block.getY() - y, block.getZ() + z);
-
-                                if (blockUnten.getType() != Material.BEDROCK) {
-                                    blockUnten.breakNaturally();
-                                }
+                            if (blockUnten.getType() != Material.BEDROCK) {
+                                blockUnten.breakNaturally();
                             }
                         }
                     }
-                });
+                }
             }
         }
     }
 
-
-    @Override
-    public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        if (sender instanceof Player) {
-            Player player = (Player) sender;
-            OfflinePlayer offlinePlayer = (Player) sender;
-            ItemStack itemStack = player.getItemInHand();
-
-            NBTItem nbtItem = new NBTItem(itemStack);
-            nbtItem.setString(args[0], "CustomItem");
-            player.sendMessage(plugin.getPrefix() + ChatColor.BLUE +"Dem Item wurde erfolgreich, der NBTTag: " + ChatColor.LIGHT_PURPLE + args[0].toString() + ChatColor.BLUE + " hinzugefügt.");
-
-            ItemMeta bedrockPicke = nbtItem.getItem().getItemMeta();
-            player.getItemInHand().setItemMeta(bedrockPicke);
-
-            this.economy.depositPlayer(player, 1000);
-
-            player.sendMessage("Das ist dein Money: " + this.economy.getBalance(offlinePlayer));
-        }
-        return false;
-    }
 
     @EventHandler
     public void onAnvilInventoryClick(InventoryClickEvent event) {
@@ -175,13 +143,13 @@ public class BedrockPickaxe implements Listener, Item, CommandExecutor {
                                 BedrockPickaxe resultItem = new BedrockPickaxe(this.plugin, ".2");
                                 anvilInventory.setItem(2, resultItem.getBedrockPickaxeWithNBT());
 
-                                player.sendMessage(this.plugin.getPrefix() + "§dDu kannst die " + resultItem.getBedrockPickaxeWithNBT().getItemMeta().getDisplayName() + " nicht mehr im Amboss benutzen!");
+                                player.sendMessage(this.plugin.getPrefix() + "§dDu kannst die " + resultItem.getBedrockPickaxeWithNBT().getItemMeta().getDisplayName() + " §dnicht mehr im Amboss benutzen!");
 
                             } else if (nbtItemSlotOne.hasKey(this.nbtTag()) || nbtItemSlotTwo.hasKey(this.nbtTag())) {
                                 BedrockPickaxe resultItem = new BedrockPickaxe(this.plugin, ".1");
                                 anvilInventory.setItem(2, resultItem.getBedrockPickaxeWithNBT());
 
-                                player.sendMessage(this.plugin.getPrefix() + "§dDu kannst die " + resultItem.getBedrockPickaxeWithNBT().getItemMeta().getDisplayName() + " noch ein Mal im Amboss benutzen!");
+                                player.sendMessage(this.plugin.getPrefix() + "§dDu kannst die " + resultItem.getBedrockPickaxeWithNBT().getItemMeta().getDisplayName() + " §dnoch ein Mal im Amboss benutzen!");
                             } else {
                                 event.setCancelled(true);
                                 player.closeInventory();
@@ -194,7 +162,7 @@ public class BedrockPickaxe implements Listener, Item, CommandExecutor {
                                 BedrockPickaxe resultItem = new BedrockPickaxe(this.plugin, ".1");
                                 anvilInventory.setItem(2, resultItem.getBedrockPickaxeWithNBT());
 
-                                player.sendMessage(this.plugin.getPrefix() + "§dDu kannst die " + resultItem.getBedrockPickaxeWithNBT().getItemMeta().getDisplayName() + " nicht mehr im Amboss benutzen!");
+                                player.sendMessage(this.plugin.getPrefix() + "§dDu kannst die " + resultItem.getBedrockPickaxeWithNBT().getItemMeta().getDisplayName() + " §dnicht mehr im Amboss benutzen!");
 
                             } else if (nbtItemSlotOne.hasKey(this.nbtTag() + ".2") || nbtItemSlotTwo.hasKey(this.nbtTag() + ".2")) {
                                 event.setCancelled(true);

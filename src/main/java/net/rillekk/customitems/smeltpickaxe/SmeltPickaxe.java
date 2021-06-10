@@ -137,13 +137,13 @@ public class SmeltPickaxe extends ItemStack implements Item, Listener {
                                 SmeltPickaxe resultItem = new SmeltPickaxe(this.plugin, ".2");
                                 anvilInventory.setItem(2, resultItem.getSmeltPickaxeWithNBT());
 
-                                player.sendMessage(this.plugin.getPrefix() + "§dDu kannst die " + resultItem.getSmeltPickaxeWithNBT().getItemMeta().getDisplayName() + " nicht mehr im Amboss benutzen!");
+                                player.sendMessage(this.plugin.getPrefix() + "§dDu kannst die " + resultItem.getSmeltPickaxeWithNBT().getItemMeta().getDisplayName() + " §dnicht mehr im Amboss benutzen!");
 
                             } else if (nbtItemSlotOne.hasKey(this.nbtTag()) || nbtItemSlotTwo.hasKey(this.nbtTag())) {
                                 SmeltPickaxe resultItem = new SmeltPickaxe(this.plugin, ".1");
                                 anvilInventory.setItem(2, resultItem.getSmeltPickaxeWithNBT());
 
-                                player.sendMessage(this.plugin.getPrefix() + "§dDu kannst die " + resultItem.getSmeltPickaxeWithNBT().getItemMeta().getDisplayName() + " noch ein Mal im Amboss benutzen!");
+                                player.sendMessage(this.plugin.getPrefix() + "§dDu kannst die " + resultItem.getSmeltPickaxeWithNBT().getItemMeta().getDisplayName() + " §dnoch ein Mal im Amboss benutzen!");
                             } else {
                                 event.setCancelled(true);
                                 player.closeInventory();
@@ -156,7 +156,7 @@ public class SmeltPickaxe extends ItemStack implements Item, Listener {
                                 SmeltPickaxe resultItem = new SmeltPickaxe(this.plugin, ".1");
                                 anvilInventory.setItem(2, resultItem.getSmeltPickaxeWithNBT());
 
-                                player.sendMessage(this.plugin.getPrefix() + "§dDu kannst die " + resultItem.getSmeltPickaxeWithNBT().getItemMeta().getDisplayName() + " nicht mehr im Amboss benutzen!");
+                                player.sendMessage(this.plugin.getPrefix() + "§dDu kannst die " + resultItem.getSmeltPickaxeWithNBT().getItemMeta().getDisplayName() + " §dnicht mehr im Amboss benutzen!");
 
                             } else if (nbtItemSlotOne.hasKey(this.nbtTag() + ".2") || nbtItemSlotTwo.hasKey(this.nbtTag() + ".2")) {
                                 event.setCancelled(true);

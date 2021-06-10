@@ -32,12 +32,14 @@ import org.bukkit.inventory.ItemStack;
 public class RepairGUIListener implements Listener {
     private CustomItems plugin;
 
+    private final Integer maxRepairCost;
+    private final Economy economy = CustomItems.getEconomy();
+
     public RepairGUIListener(CustomItems plugin) {
         this.plugin = plugin;
+        this.maxRepairCost = this.plugin.getConfig().getInt("maxRepairCost");
     }
 
-    private final Economy economy = CustomItems.getEconomy();
-    private final Integer maxRepairCost = 1000;
 
     @EventHandler
     private void onClickSlot(InventoryClickEvent event) {

@@ -40,20 +40,26 @@ import java.util.Random;
 
 public class ShopGUIProvider implements InventoryProvider, Listener {
     private final CustomItems plugin;
+    private final Integer areaHoeCost;
+    private final Integer bedrockPickaxeCost;
+    private final Integer customdropsPickaxeCost;
+    private final Integer smeltPickaxeCost;
+    private final Integer orePickaxe3x3Cost;
+    private final Integer timberAxeCost;
 
     public ShopGUIProvider(CustomItems plugin) {
         this.plugin = plugin;
+        this.areaHoeCost = plugin.getConfig().getInt("areaHoeCost");
+        this.bedrockPickaxeCost = plugin.getConfig().getInt("bedrockPickaxeCost");
+        this.customdropsPickaxeCost = plugin.getConfig().getInt("customdropsPickaxeCost");
+        this.smeltPickaxeCost = plugin.getConfig().getInt("smeltPickaxeCost");
+        this.orePickaxe3x3Cost = plugin.getConfig().getInt("orePickaxe3x3Cost");
+        this.timberAxeCost = plugin.getConfig().getInt("timberAxeCost");
     }
 
     private final Random random = new Random();
     private final Economy economy = CustomItems.getEconomy();
 
-    public Integer areaHoeCost = 10;
-    public Integer bedrockPickaxeCost = 10;
-    public Integer customdropsPickaxeCost = 10;
-    public Integer smeltPickaxeCost = 10;
-    public Integer orePickaxe3x3Cost = 10;
-    public Integer timberAxeCost = 10;
 
     @Override
     public void init(Player player, InventoryContents contents) {
@@ -83,11 +89,11 @@ public class ShopGUIProvider implements InventoryProvider, Listener {
 
 
         CustomdropsPickaxe customdropsPickaxe = new CustomdropsPickaxe(this.plugin);
-        contents.set(3, 3, ClickableItem.of(customdropsPickaxe.getCustomdrpsPickaxe(),
+        contents.set(3, 3, ClickableItem.of(customdropsPickaxe.getCustomdropsPickaxe(),
                 e -> {
                     EconomyResponse resp = this.economy.withdrawPlayer(player, customdropsPickaxeCost);
                     if (resp.transactionSuccess()) {
-                        player.getInventory().addItem(customdropsPickaxe.getCustomdrpsPickaxe());
+                        player.getInventory().addItem(customdropsPickaxe.getCustomdropsPickaxe());
                     } else {
                         player.sendMessage(plugin.getPrefix() + "§dDu hast nicht genügend Geld dafür!");
                     }

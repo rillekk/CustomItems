@@ -86,6 +86,7 @@ public class OrePickaxe3x3 implements Listener, Item {
     public ItemStack getOrePickaxe3x3() {
         return this.orePickaxe3x3;
     }
+
     public ItemStack getOrePickaxe3x3WithNBT() {
         return orePickaxe3x3WithNBT;
     }
@@ -122,13 +123,11 @@ public class OrePickaxe3x3 implements Listener, Item {
                 BlockFace blockFace = getBlockFaceByPlayerName(player.getName());
                 ArrayList<Block> blocks = blockfaceCheck.getSurroundingBlocks(blockFace, block);
 
-                Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                    for (Block b : blocks) {
-                        if (b.getType() != Material.BEDROCK) {
-                            b.breakNaturally();
-                        }
+                for (Block b : blocks) {
+                    if (b.getType() != Material.BEDROCK) {
+                        b.breakNaturally();
                     }
-                });
+                }
             }
         }
     }
@@ -163,13 +162,13 @@ public class OrePickaxe3x3 implements Listener, Item {
                                 OrePickaxe3x3 resultItem = new OrePickaxe3x3(this.plugin, ".2");
                                 anvilInventory.setItem(2, resultItem.getOrePickaxe3x3WithNBT());
 
-                                player.sendMessage(this.plugin.getPrefix() + "§dDu kannst die " + resultItem.getOrePickaxe3x3WithNBT().getItemMeta().getDisplayName() + " nicht mehr im Amboss benutzen!");
+                                player.sendMessage(this.plugin.getPrefix() + "§dDu kannst die " + resultItem.getOrePickaxe3x3WithNBT().getItemMeta().getDisplayName() + " §dnicht mehr im Amboss benutzen!");
 
                             } else if (nbtItemSlotOne.hasKey(this.nbtTag()) || nbtItemSlotTwo.hasKey(this.nbtTag())) {
                                 OrePickaxe3x3 resultItem = new OrePickaxe3x3(this.plugin, ".1");
                                 anvilInventory.setItem(2, resultItem.getOrePickaxe3x3WithNBT());
 
-                                player.sendMessage(this.plugin.getPrefix() + "§dDu kannst die " + resultItem.getOrePickaxe3x3WithNBT().getItemMeta().getDisplayName() + " noch ein Mal im Amboss benutzen!");
+                                player.sendMessage(this.plugin.getPrefix() + "§dDu kannst die " + resultItem.getOrePickaxe3x3WithNBT().getItemMeta().getDisplayName() + " §dnoch ein Mal im Amboss benutzen!");
                             } else {
                                 event.setCancelled(true);
                                 player.closeInventory();
@@ -182,7 +181,7 @@ public class OrePickaxe3x3 implements Listener, Item {
                                 OrePickaxe3x3 resultItem = new OrePickaxe3x3(this.plugin, ".1");
                                 anvilInventory.setItem(2, resultItem.getOrePickaxe3x3WithNBT());
 
-                                player.sendMessage(this.plugin.getPrefix() + "§dDu kannst die " + resultItem.getOrePickaxe3x3WithNBT().getItemMeta().getDisplayName() + " nicht mehr im Amboss benutzen!");
+                                player.sendMessage(this.plugin.getPrefix() + "§dDu kannst die " + resultItem.getOrePickaxe3x3WithNBT().getItemMeta().getDisplayName() + " §dnicht mehr im Amboss benutzen!");
 
                             } else if (nbtItemSlotOne.hasKey(this.nbtTag() + ".2") || nbtItemSlotTwo.hasKey(this.nbtTag() + ".2")) {
                                 event.setCancelled(true);

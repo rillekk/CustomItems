@@ -21,6 +21,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import org.bukkit.Bukkit;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -60,6 +61,18 @@ public class CustomItems extends JavaPlugin {
 
     @Override
     public void onEnable() {
+        INSTANCE = this;
+
+        getConfig().addDefault("Prefix", "§6§lTTools| ");
+        getConfig().addDefault("CustomdropsChance", 10);
+        getConfig().addDefault("areaHoeCost", 100);
+        getConfig().addDefault("bedrockPickaxeCost", 100);
+        getConfig().addDefault("customdropsPickaxeCost", 100);
+        getConfig().addDefault("smeltPickaxeCost", 100);
+        getConfig().addDefault("orePickaxe3x3Cost", 100);
+        getConfig().addDefault("timberAxeCost", 100);
+        getConfig().options().copyDefaults(true);
+        saveConfig();
 
         if (!setupEconomy()) {
             log.severe(String.format("[%s] - Disabled due to no Vault dependency found!", getDescription().getName()));
@@ -67,23 +80,20 @@ public class CustomItems extends JavaPlugin {
             return;
         }
 
-        INSTANCE = this;
-        this.prefix = "§eToastItems§e| ";
+        this.prefix = getConfig().getString("Prefix");
         this.blockfaceCheck = new BlockfaceCheck(this);
         this.cachedThreadExecutor = Executors.newCachedThreadPool();
         this.repairGUI = new RepairGUI(this);
 
 
-
-        super.getCommand("axt").setExecutor(new BedrockPickaxe(this));
         super.getCommand("shopgui").setExecutor(new ShopGUI(this));
 
-        Bukkit.getPluginManager().registerEvents(new TimberAxe(this), this);
-        Bukkit.getPluginManager().registerEvents(new BedrockPickaxe(this), this);
-        Bukkit.getPluginManager().registerEvents(new SmeltPickaxe(this), this);
-        Bukkit.getPluginManager().registerEvents(new OrePickaxe3x3(this), this);
-        Bukkit.getPluginManager().registerEvents(new CustomdropsPickaxe(this), this);
         Bukkit.getPluginManager().registerEvents(new AreaHoe(this), this);
+        Bukkit.getPluginManager().registerEvents(new BedrockPickaxe(this), this);
+        Bukkit.getPluginManager().registerEvents(new CustomdropsPickaxe(this), this);
+        Bukkit.getPluginManager().registerEvents(new OrePickaxe3x3(this), this);
+        Bukkit.getPluginManager().registerEvents(new SmeltPickaxe(this), this);
+        Bukkit.getPluginManager().registerEvents(new TimberAxe(this), this);
         Bukkit.getPluginManager().registerEvents(new BlockfaceCheck(this), this);
         Bukkit.getPluginManager().registerEvents(new RepairGUIListener(this), this);
         Bukkit.getPluginManager().registerEvents(new ShopGUIProvider(this), this);

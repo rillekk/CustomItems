@@ -127,13 +127,13 @@ public class TimberAxe implements Item, Listener {
                                 TimberAxe resultItem = new TimberAxe(this.plugin, ".2");
                                 anvilInventory.setItem(2, resultItem.getTimberAxeWithNBT());
 
-                                player.sendMessage(this.plugin.getPrefix() + "§dDu kannst die " + resultItem.getTimberAxeWithNBT().getItemMeta().getDisplayName() + " nicht mehr im Amboss benutzen!");
+                                player.sendMessage(this.plugin.getPrefix() + "§dDu kannst die " + resultItem.getTimberAxeWithNBT().getItemMeta().getDisplayName() + " §dnicht mehr im Amboss benutzen!");
 
                             } else if (nbtItemSlotOne.hasKey(this.nbtTag()) || nbtItemSlotTwo.hasKey(this.nbtTag())) {
                                 TimberAxe resultItem = new TimberAxe(this.plugin, ".1");
                                 anvilInventory.setItem(2, resultItem.getTimberAxeWithNBT());
 
-                                player.sendMessage(this.plugin.getPrefix() + "§dDu kannst die " + resultItem.getTimberAxeWithNBT().getItemMeta().getDisplayName() + " noch ein Mal im Amboss benutzen!");
+                                player.sendMessage(this.plugin.getPrefix() + "§dDu kannst die " + resultItem.getTimberAxeWithNBT().getItemMeta().getDisplayName() + " §dnoch ein Mal im Amboss benutzen!");
                             } else {
                                 event.setCancelled(true);
                                 player.closeInventory();
@@ -146,7 +146,7 @@ public class TimberAxe implements Item, Listener {
                                 TimberAxe resultItem = new TimberAxe(this.plugin, ".1");
                                 anvilInventory.setItem(2, resultItem.getTimberAxeWithNBT());
 
-                                player.sendMessage(this.plugin.getPrefix() + "§dDu kannst die " + resultItem.getTimberAxeWithNBT().getItemMeta().getDisplayName() + " nicht mehr im Amboss benutzen!");
+                                player.sendMessage(this.plugin.getPrefix() + "§dDu kannst die " + resultItem.getTimberAxeWithNBT().getItemMeta().getDisplayName() + " §dnicht mehr im Amboss benutzen!");
 
                             } else if (nbtItemSlotOne.hasKey(this.nbtTag() + ".2") || nbtItemSlotTwo.hasKey(this.nbtTag() + ".2")) {
                                 event.setCancelled(true);

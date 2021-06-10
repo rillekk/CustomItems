@@ -37,13 +37,15 @@ import java.util.Random;
 
 
 public class CustomdropsPickaxe implements Listener, Item {
-    private final CustomItems plugin;
+    private CustomItems plugin;
 
     private ItemStack customdropsPickaxe;
     private ItemStack customdropsPickaxeWithNBT;
 
     private final String name = "§6§lCustomdropsPickaxe";
     private final String nbtTag = "§6§lCustomdropsPickaxe";
+
+    private final Integer dropChance;
 
     public CustomdropsPickaxe(CustomItems plugin) {
         this.plugin = plugin;
@@ -53,6 +55,7 @@ public class CustomdropsPickaxe implements Listener, Item {
         ItemMeta customdropsPickaxeMeta = nbtItem.getItem().getItemMeta();
         customdropsPickaxeMeta.setDisplayName(this.name);
         customdropsPickaxe.setItemMeta(customdropsPickaxeMeta);
+        this.dropChance = plugin.getConfig().getInt("CustomdropsChance");
     }
 
     private CustomdropsPickaxe(CustomItems plugin, String nbtTag) {
@@ -63,9 +66,10 @@ public class CustomdropsPickaxe implements Listener, Item {
         ItemMeta customdropsPickaxeWithNBTMeta = nbtItem.getItem().getItemMeta();
         customdropsPickaxeWithNBTMeta.setDisplayName(this.name);
         customdropsPickaxeWithNBT.setItemMeta(customdropsPickaxeWithNBTMeta);
+        this.dropChance = plugin.getConfig().getInt("CustomdropsChance");
     }
 
-    public ItemStack getCustomdrpsPickaxe() {
+    public ItemStack getCustomdropsPickaxe() {
         return this.customdropsPickaxe;
     }
     public ItemStack getCustomdropsPickaxeWithNBT() {
@@ -81,8 +85,6 @@ public class CustomdropsPickaxe implements Listener, Item {
     public String nbtTag() {
         return this.nbtTag;
     }
-
-    private Integer dropChance = 90;
 
     @EventHandler
     public void onBreak(BlockBreakEvent event) {
@@ -142,10 +144,10 @@ public class CustomdropsPickaxe implements Listener, Item {
                     NBTItem nbtItemSlotOne = new NBTItem(slotOneItemStack);
                     NBTItem nbtItemSlotTwo = new NBTItem(slotTwoItemStack);
 
-                    if (slotOneItemStack.equals(this.getCustomdrpsPickaxe()) ||
+                    if (slotOneItemStack.equals(this.getCustomdropsPickaxe()) ||
                             nbtItemSlotOne.hasKey(this.nbtTag + ".1") ||
                             nbtItemSlotOne.hasKey(this.nbtTag + ".2") ||
-                            slotTwoItemStack.equals(this.getCustomdrpsPickaxe()) ||
+                            slotTwoItemStack.equals(this.getCustomdropsPickaxe()) ||
                             nbtItemSlotTwo.hasKey(this.nbtTag + ".1") ||
                             nbtItemSlotTwo.hasKey(this.nbtTag + ".2")) {
 
@@ -154,13 +156,13 @@ public class CustomdropsPickaxe implements Listener, Item {
                                 CustomdropsPickaxe resultItem = new CustomdropsPickaxe(this.plugin, ".2");
                                 anvilInventory.setItem(2, resultItem.getCustomdropsPickaxeWithNBT());
 
-                                player.sendMessage(this.plugin.getPrefix() + "§dDu kannst die " + resultItem.getCustomdropsPickaxeWithNBT().getItemMeta().getDisplayName() + " nicht mehr im Amboss benutzen!");
+                                player.sendMessage(this.plugin.getPrefix() + "§dDu kannst die " + resultItem.getCustomdropsPickaxeWithNBT().getItemMeta().getDisplayName() + " §dnicht mehr im Amboss benutzen!");
 
                             } else if (nbtItemSlotOne.hasKey(this.nbtTag()) || nbtItemSlotTwo.hasKey(this.nbtTag())) {
                                 CustomdropsPickaxe resultItem = new CustomdropsPickaxe(this.plugin, ".1");
                                 anvilInventory.setItem(2, resultItem.getCustomdropsPickaxeWithNBT());
 
-                                player.sendMessage(this.plugin.getPrefix() + "§dDu kannst die " + resultItem.getCustomdropsPickaxeWithNBT().getItemMeta().getDisplayName() + " noch ein Mal im Amboss benutzen!");
+                                player.sendMessage(this.plugin.getPrefix() + "§dDu kannst die " + resultItem.getCustomdropsPickaxeWithNBT().getItemMeta().getDisplayName() + " §dnoch ein Mal im Amboss benutzen!");
                             } else {
                                 event.setCancelled(true);
                                 player.closeInventory();
@@ -173,7 +175,7 @@ public class CustomdropsPickaxe implements Listener, Item {
                                 CustomdropsPickaxe resultItem = new CustomdropsPickaxe(this.plugin, ".1");
                                 anvilInventory.setItem(2, resultItem.getCustomdropsPickaxeWithNBT());
 
-                                player.sendMessage(this.plugin.getPrefix() + "§dDu kannst die " + resultItem.getCustomdropsPickaxeWithNBT().getItemMeta().getDisplayName() + " nicht mehr im Amboss benutzen!");
+                                player.sendMessage(this.plugin.getPrefix() + "§dDu kannst die " + resultItem.getCustomdropsPickaxeWithNBT().getItemMeta().getDisplayName() + " §dnicht mehr im Amboss benutzen!");
 
                             } else if (nbtItemSlotOne.hasKey(this.nbtTag() + ".2") || nbtItemSlotTwo.hasKey(this.nbtTag() + ".2")) {
                                 event.setCancelled(true);
