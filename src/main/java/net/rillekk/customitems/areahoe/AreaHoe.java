@@ -7,6 +7,7 @@ import net.rillekk.customitems.items.Item;
 import de.tr7zw.nbtapi.NBTItem;
 
 import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.block.Block;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
@@ -95,13 +96,41 @@ public class AreaHoe implements Item, Listener {
 
                 switch (block.getType()) {
                     case CROPS:
+                        for (int i = x - 2; i < x + 3; i++) {
+                            for (int k = z - 2; k < z + 3; k++) {
+                                Block newBlock = block.getWorld().getBlockAt(i, y, k);
+                                newBlock.breakNaturally();
+                                newBlock.setType(Material.CROPS);
+                            }
+                        }
+                        break;
+
                     case CARROT:
+                        for (int i = x - 2; i < x + 3; i++) {
+                            for (int k = z - 2; k < z + 3; k++) {
+                                Block newBlock = block.getWorld().getBlockAt(i, y, k);
+                                newBlock.breakNaturally();
+                                newBlock.setType(Material.CARROT);
+                            }
+                        }
+                        break;
+
                     case POTATO:
+                        for (int i = x - 2; i < x + 3; i++) {
+                            for (int k = z - 2; k < z + 3; k++) {
+                                Block newBlock = block.getWorld().getBlockAt(i, y, k);
+                                newBlock.breakNaturally();
+                                newBlock.setType(Material.POTATO);
+                            }
+                        }
+                        break;
+
                     case NETHER_WARTS:
                         for (int i = x - 2; i < x + 3; i++) {
                             for (int k = z - 2; k < z + 3; k++) {
                                 Block newBlock = block.getWorld().getBlockAt(i, y, k);
                                 newBlock.breakNaturally();
+                                newBlock.setType(Material.NETHER_WARTS);
                             }
                         }
                         break;
@@ -133,6 +162,22 @@ public class AreaHoe implements Item, Listener {
                             if (newBlock.getType() == Material.DIRT || newBlock.getType() == Material.GRASS) {
                                 newBlock.setType(Material.SOIL);
                             }
+
+                            if (handItem.getDurability() != handItem.getType().getMaxDurability()) {
+                                handItem.setDurability((short) (handItem.getDurability() + 1));
+                                player.updateInventory();
+
+                            } else if (handItem.getDurability() <= handItem.getType().getMaxDurability() || handItem.getDurability() == 0) {
+                                if (player.getInventory().getItemInHand().getAmount() == 1) {
+                                    player.getInventory().setItemInHand(new ItemStack(Material.AIR));
+                                } else {
+                                    player.getInventory().getItemInHand().setAmount(player.getInventory().getItemInHand().getAmount()-1);
+                                }
+                                player.updateInventory();
+
+                                player.playSound(player.getLocation(), Sound.ITEM_BREAK, 1F, 1F);
+                            }
+
                         }
                     }
                 }
@@ -217,7 +262,7 @@ public class AreaHoe implements Item, Listener {
     public ItemStack getAreaHoe() {
         return this.areaHoe;
     }
-    
+
     public ItemStack getAreaHoeWithNBT() {
         return areaHoeWithNBT;
     }

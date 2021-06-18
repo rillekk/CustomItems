@@ -4,6 +4,7 @@ package net.rillekk.customitems;
 import net.rillekk.customitems.areahoe.AreaHoe;
 import net.rillekk.customitems.customdrops.CustomdropsPickaxe;
 import net.rillekk.customitems.orepickaxe.OrePickaxe3x3;
+import net.rillekk.customitems.orepickaxe.OrePickaxe5x5;
 import net.rillekk.customitems.repairgui.RepairGUI;
 import net.rillekk.customitems.repairgui.RepairGUIListener;
 import net.rillekk.customitems.shopgui.ShopGUI;
@@ -70,6 +71,7 @@ public class CustomItems extends JavaPlugin {
         getConfig().addDefault("customdropsPickaxeCost", 100);
         getConfig().addDefault("smeltPickaxeCost", 100);
         getConfig().addDefault("orePickaxe3x3Cost", 100);
+        getConfig().addDefault("orePickaxe5x5Cost", 100);
         getConfig().addDefault("timberAxeCost", 100);
         getConfig().options().copyDefaults(true);
         saveConfig();
@@ -92,6 +94,7 @@ public class CustomItems extends JavaPlugin {
         Bukkit.getPluginManager().registerEvents(new BedrockPickaxe(this), this);
         Bukkit.getPluginManager().registerEvents(new CustomdropsPickaxe(this), this);
         Bukkit.getPluginManager().registerEvents(new OrePickaxe3x3(this), this);
+        Bukkit.getPluginManager().registerEvents(new OrePickaxe5x5(this), this);
         Bukkit.getPluginManager().registerEvents(new SmeltPickaxe(this), this);
         Bukkit.getPluginManager().registerEvents(new TimberAxe(this), this);
         Bukkit.getPluginManager().registerEvents(new BlockfaceCheck(this), this);

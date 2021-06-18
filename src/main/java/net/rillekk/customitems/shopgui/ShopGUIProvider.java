@@ -6,6 +6,7 @@ import net.rillekk.customitems.areahoe.AreaHoe;
 import net.rillekk.customitems.bedrockpickaxe.BedrockPickaxe;
 import net.rillekk.customitems.customdrops.CustomdropsPickaxe;
 import net.rillekk.customitems.orepickaxe.OrePickaxe3x3;
+import net.rillekk.customitems.orepickaxe.OrePickaxe5x5;
 import net.rillekk.customitems.smeltpickaxe.SmeltPickaxe;
 import net.rillekk.customitems.timberaxe.TimberAxe;
 
@@ -46,6 +47,7 @@ public class ShopGUIProvider implements InventoryProvider, Listener {
     private final Integer customdropsPickaxeCost;
     private final Integer smeltPickaxeCost;
     private final Integer orePickaxe3x3Cost;
+    private final Integer orePickaxe5x5Cost;
     private final Integer timberAxeCost;
 
     private final Random random = new Random();
@@ -58,6 +60,7 @@ public class ShopGUIProvider implements InventoryProvider, Listener {
         this.customdropsPickaxeCost = plugin.getConfig().getInt("customdropsPickaxeCost");
         this.smeltPickaxeCost = plugin.getConfig().getInt("smeltPickaxeCost");
         this.orePickaxe3x3Cost = plugin.getConfig().getInt("orePickaxe3x3Cost");
+        this.orePickaxe5x5Cost = plugin.getConfig().getInt("orePickaxe5x5Cost");
         this.timberAxeCost = plugin.getConfig().getInt("timberAxeCost");
     }
 
@@ -101,11 +104,22 @@ public class ShopGUIProvider implements InventoryProvider, Listener {
                 }));
 
         OrePickaxe3x3 orePickaxe3x3 = new OrePickaxe3x3(this.plugin);
-        contents.set(3, 5, ClickableItem.of(orePickaxe3x3.getOrePickaxe3x3(),
+        contents.set(3, 4, ClickableItem.of(orePickaxe3x3.getOrePickaxe3x3(),
                 e -> {
                     EconomyResponse resp = this.economy.withdrawPlayer(player, orePickaxe3x3Cost);
                     if (resp.transactionSuccess()) {
                         player.getInventory().addItem(orePickaxe3x3.getOrePickaxe3x3());
+                    } else {
+                        player.sendMessage(plugin.getPrefix() + "§dDu hast nicht genügend Geld dafür!");
+                    }
+                }));
+
+        OrePickaxe5x5 orePickaxe5x5 = new OrePickaxe5x5(this.plugin);
+        contents.set(3, 5, ClickableItem.of(orePickaxe5x5.getOrePickaxe5x5(),
+                e -> {
+                    EconomyResponse resp = this.economy.withdrawPlayer(player, orePickaxe5x5Cost);
+                    if (resp.transactionSuccess()) {
+                        player.getInventory().addItem(orePickaxe5x5.getOrePickaxe5x5());
                     } else {
                         player.sendMessage(plugin.getPrefix() + "§dDu hast nicht genügend Geld dafür!");
                     }

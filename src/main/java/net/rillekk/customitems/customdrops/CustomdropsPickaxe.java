@@ -99,20 +99,92 @@ public class CustomdropsPickaxe implements Listener, Item {
 
                 switch (block.getType()) {
                     case IRON_ORE:
-                    case GOLD_ORE:
-                    case COAL_ORE:
-                    case DIAMOND_ORE:
-                    case EMERALD_ORE:
                         if (chance < dropChance) {
+                            block.setType(Material.AIR);
+
                             ItemStack ironIngot = new ItemStack(Material.IRON_INGOT);
-                            ItemStack goldIngot = new ItemStack(Material.GOLD_ORE);
-                            ItemStack diamondIngot = new ItemStack(Material.DIAMOND_ORE);
-                            ItemStack coalIngot = new ItemStack(Material.COAL_ORE);
+                            ItemStack goldIngot = new ItemStack(Material.GOLD_INGOT);
+                            ItemStack diamondIngot = new ItemStack(Material.DIAMOND);
+                            ItemStack coalIngot = new ItemStack(Material.COAL);
+                            ItemStack emeraldIngot = new ItemStack(Material.EMERALD);
 
                             player.getWorld().dropItemNaturally(blockLocation, goldIngot);
                             player.getWorld().dropItemNaturally(blockLocation, diamondIngot);
                             player.getWorld().dropItemNaturally(blockLocation, coalIngot);
                             player.getWorld().dropItemNaturally(blockLocation, ironIngot);
+                            player.getWorld().dropItemNaturally(blockLocation, emeraldIngot);
+                        }
+                        break;
+
+                    case GOLD_ORE:
+                        if (chance < dropChance) {
+                            block.setType(Material.AIR);
+
+                            ItemStack ironIngot = new ItemStack(Material.IRON_INGOT);
+                            ItemStack goldIngot = new ItemStack(Material.GOLD_INGOT);
+                            ItemStack diamondIngot = new ItemStack(Material.DIAMOND);
+                            ItemStack coalIngot = new ItemStack(Material.COAL);
+                            ItemStack emeraldIngot = new ItemStack(Material.EMERALD);
+
+                            player.getWorld().dropItemNaturally(blockLocation, goldIngot);
+                            player.getWorld().dropItemNaturally(blockLocation, diamondIngot);
+                            player.getWorld().dropItemNaturally(blockLocation, coalIngot);
+                            player.getWorld().dropItemNaturally(blockLocation, ironIngot);
+                            player.getWorld().dropItemNaturally(blockLocation, emeraldIngot);
+                        }
+                        break;
+
+                    case COAL_ORE:
+                        if (chance < dropChance) {
+                            block.setType(Material.AIR);
+
+                            ItemStack ironIngot = new ItemStack(Material.IRON_INGOT);
+                            ItemStack goldIngot = new ItemStack(Material.GOLD_INGOT);
+                            ItemStack diamondIngot = new ItemStack(Material.DIAMOND);
+                            ItemStack coalIngot = new ItemStack(Material.COAL);
+                            ItemStack emeraldIngot = new ItemStack(Material.EMERALD);
+
+                            player.getWorld().dropItemNaturally(blockLocation, goldIngot);
+                            player.getWorld().dropItemNaturally(blockLocation, diamondIngot);
+                            player.getWorld().dropItemNaturally(blockLocation, coalIngot);
+                            player.getWorld().dropItemNaturally(blockLocation, ironIngot);
+                            player.getWorld().dropItemNaturally(blockLocation, emeraldIngot);
+                        }
+                        break;
+
+                    case DIAMOND_ORE:
+                        if (chance < dropChance) {
+                            block.setType(Material.AIR);
+
+                            ItemStack ironIngot = new ItemStack(Material.IRON_INGOT);
+                            ItemStack goldIngot = new ItemStack(Material.GOLD_INGOT);
+                            ItemStack diamondIngot = new ItemStack(Material.DIAMOND);
+                            ItemStack coalIngot = new ItemStack(Material.COAL);
+                            ItemStack emeraldIngot = new ItemStack(Material.EMERALD);
+
+                            player.getWorld().dropItemNaturally(blockLocation, goldIngot);
+                            player.getWorld().dropItemNaturally(blockLocation, diamondIngot);
+                            player.getWorld().dropItemNaturally(blockLocation, coalIngot);
+                            player.getWorld().dropItemNaturally(blockLocation, ironIngot);
+                            player.getWorld().dropItemNaturally(blockLocation, emeraldIngot);
+                        }
+                        break;
+
+                    case EMERALD_ORE:
+                        if (chance < dropChance) {
+                            block.setType(Material.AIR);
+
+                            ItemStack ironIngot = new ItemStack(Material.IRON_INGOT);
+                            ItemStack goldIngot = new ItemStack(Material.GOLD_INGOT);
+                            ItemStack diamondIngot = new ItemStack(Material.DIAMOND);
+                            ItemStack coalIngot = new ItemStack(Material.COAL);
+                            ItemStack emeraldIngot = new ItemStack(Material.EMERALD);
+
+                            player.getWorld().dropItemNaturally(blockLocation, goldIngot);
+                            player.getWorld().dropItemNaturally(blockLocation, diamondIngot);
+                            player.getWorld().dropItemNaturally(blockLocation, coalIngot);
+                            player.getWorld().dropItemNaturally(blockLocation, ironIngot);
+                            player.getWorld().dropItemNaturally(blockLocation, emeraldIngot);
                         }
                         break;
                 }
@@ -196,6 +268,7 @@ public class CustomdropsPickaxe implements Listener, Item {
     public ItemStack getCustomdropsPickaxe() {
         return this.customdropsPickaxe;
     }
+
     public ItemStack getCustomdropsPickaxeWithNBT() {
         return customdropsPickaxeWithNBT;
     }

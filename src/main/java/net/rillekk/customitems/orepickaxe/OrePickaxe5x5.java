@@ -42,35 +42,35 @@ import java.util.HashMap;
  ***************************************************************/
 
 
-public class OrePickaxe3x3 implements Listener, Item {
+public class OrePickaxe5x5 implements Listener, Item {
     private final CustomItems plugin;
 
-    private ItemStack orePickaxe3x3;
-    private ItemStack orePickaxe3x3WithNBT;
+    private ItemStack orePickaxe5x5;
+    private ItemStack orePickaxe5x5WithNBT;
 
-    private final String name = "§6§lOrePickaxe3x3";
-    private final String nbtTag = "§6§lOrePickaxe3x3";
+    private final String name = "§6§lOrePickaxe5x5";
+    private final String nbtTag = "§6§lOrePickaxe5x5";
 
     private final HashMap<String, BlockFace> faces = new HashMap<>();
 
-    public OrePickaxe3x3(CustomItems plugin) {
+    public OrePickaxe5x5(CustomItems plugin) {
         this.plugin = plugin;
-        orePickaxe3x3 = new ItemStack(Material.DIAMOND_PICKAXE);
-        NBTItem nbtItem = new NBTItem(orePickaxe3x3);
+        orePickaxe5x5 = new ItemStack(Material.DIAMOND_PICKAXE);
+        NBTItem nbtItem = new NBTItem(orePickaxe5x5);
         nbtItem.setString(this.nbtTag, "CustomItem");
-        ItemMeta orePickaxe3x3Meta = nbtItem.getItem().getItemMeta();
-        orePickaxe3x3Meta.setDisplayName(this.name);
-        orePickaxe3x3.setItemMeta(orePickaxe3x3Meta);
+        ItemMeta orePickaxe5x5Meta = nbtItem.getItem().getItemMeta();
+        orePickaxe5x5Meta.setDisplayName(this.name);
+        orePickaxe5x5.setItemMeta(orePickaxe5x5Meta);
     }
 
-    private OrePickaxe3x3(CustomItems plugin, String nbtTag) {
+    private OrePickaxe5x5(CustomItems plugin, String nbtTag) {
         this.plugin = plugin;
-        orePickaxe3x3WithNBT = new ItemStack(Material.DIAMOND_PICKAXE);
-        NBTItem nbtItem = new NBTItem(orePickaxe3x3WithNBT);
+        orePickaxe5x5WithNBT = new ItemStack(Material.DIAMOND_PICKAXE);
+        NBTItem nbtItem = new NBTItem(orePickaxe5x5WithNBT);
         nbtItem.setString(this.nbtTag + nbtTag, "CustomItem");
-        ItemMeta orePickaxe3x3WithNBTMeta = nbtItem.getItem().getItemMeta();
-        orePickaxe3x3WithNBTMeta.setDisplayName(this.name);
-        orePickaxe3x3WithNBT.setItemMeta(orePickaxe3x3WithNBTMeta);
+        ItemMeta orePickaxe5x5WithNBTMeta = nbtItem.getItem().getItemMeta();
+        orePickaxe5x5WithNBTMeta.setDisplayName(this.name);
+        orePickaxe5x5WithNBT.setItemMeta(orePickaxe5x5WithNBTMeta);
     }
 
     @Override
@@ -95,6 +95,7 @@ public class OrePickaxe3x3 implements Listener, Item {
         }
     }
 
+
     @EventHandler
     public void onBreak(BlockBreakEvent event) {
         Player player = event.getPlayer();
@@ -108,33 +109,33 @@ public class OrePickaxe3x3 implements Listener, Item {
                 event.setCancelled(true);
                 block.breakNaturally();
 
-                BlockfaceCheck blockfaceCheck = new BlockfaceCheck(this.plugin);
-                BlockFace blockFace = getBlockFaceByPlayerName(player.getName());
-                ArrayList<Block> blocks = blockfaceCheck.getSurroundingBlocks(blockFace, block);
+                for (int x = -2; x <= 2; x++) {
+                    for (int y = -2; y <= 2; y++) {
+                        for (int z = -2; z <= 2; z++) {
+                            Block newBlock = block.getRelative(x, y, z);
+                            newBlock.breakNaturally();
 
-                for (Block b : blocks) {
-                    if (b.getType() != Material.BEDROCK) {
-                        b.breakNaturally();
-                    }
+                            if (handItem.getDurability() != handItem.getType().getMaxDurability()) {
+                                handItem.setDurability((short) (handItem.getDurability() + 1));
+                                player.updateInventory();
 
-                    if (handItem.getDurability() != handItem.getType().getMaxDurability()) {
-                        handItem.setDurability((short) (handItem.getDurability() + 1));
-                        player.updateInventory();
+                            } else if (handItem.getDurability() <= handItem.getType().getMaxDurability() || handItem.getDurability() == 0) {
+                                if (player.getInventory().getItemInHand().getAmount() == 1) {
+                                    player.getInventory().setItemInHand(new ItemStack(Material.AIR));
+                                } else {
+                                    player.getInventory().getItemInHand().setAmount(player.getInventory().getItemInHand().getAmount() - 1);
+                                }
+                                player.updateInventory();
 
-                    } else if (handItem.getDurability() <= handItem.getType().getMaxDurability() || handItem.getDurability() == 0) {
-                        if (player.getInventory().getItemInHand().getAmount() == 1) {
-                            player.getInventory().setItemInHand(new ItemStack(Material.AIR));
-                        } else {
-                            player.getInventory().getItemInHand().setAmount(player.getInventory().getItemInHand().getAmount()-1);
+                                player.playSound(player.getLocation(), Sound.ITEM_BREAK, 1F, 1F);
+                            }
                         }
-                        player.updateInventory();
-
-                        player.playSound(player.getLocation(), Sound.ITEM_BREAK, 1F, 1F);
                     }
                 }
             }
         }
     }
+
 
     @EventHandler
     public void onAnvilInventoryClick(InventoryClickEvent event) {
@@ -154,25 +155,25 @@ public class OrePickaxe3x3 implements Listener, Item {
                     NBTItem nbtItemSlotOne = new NBTItem(slotOneItemStack);
                     NBTItem nbtItemSlotTwo = new NBTItem(slotTwoItemStack);
 
-                    if (slotOneItemStack.equals(this.getOrePickaxe3x3()) ||
+                    if (slotOneItemStack.equals(this.getOrePickaxe5x5()) ||
                             nbtItemSlotOne.hasKey(this.nbtTag + ".1") ||
                             nbtItemSlotOne.hasKey(this.nbtTag + ".2") ||
-                            slotTwoItemStack.equals(this.getOrePickaxe3x3()) ||
+                            slotTwoItemStack.equals(this.getOrePickaxe5x5()) ||
                             nbtItemSlotTwo.hasKey(this.nbtTag + ".1") ||
                             nbtItemSlotTwo.hasKey(this.nbtTag + ".2")) {
 
                         if (player.hasPermission("ttools.enchant.2")) {
                             if (nbtItemSlotOne.hasKey(this.nbtTag() + ".1") || nbtItemSlotTwo.hasKey(this.nbtTag() + ".1")) {
-                                OrePickaxe3x3 resultItem = new OrePickaxe3x3(this.plugin, ".2");
-                                anvilInventory.setItem(2, resultItem.getOrePickaxe3x3WithNBT());
+                                OrePickaxe5x5 resultItem = new OrePickaxe5x5(this.plugin, ".2");
+                                anvilInventory.setItem(2, resultItem.getOrePickaxe5x5WithNBT());
 
-                                player.sendMessage(this.plugin.getPrefix() + "§dDu kannst die " + resultItem.getOrePickaxe3x3WithNBT().getItemMeta().getDisplayName() + " §dnicht mehr im Amboss benutzen!");
+                                player.sendMessage(this.plugin.getPrefix() + "§dDu kannst die " + resultItem.getOrePickaxe5x5WithNBT().getItemMeta().getDisplayName() + " §dnicht mehr im Amboss benutzen!");
 
                             } else if (nbtItemSlotOne.hasKey(this.nbtTag()) || nbtItemSlotTwo.hasKey(this.nbtTag())) {
-                                OrePickaxe3x3 resultItem = new OrePickaxe3x3(this.plugin, ".1");
-                                anvilInventory.setItem(2, resultItem.getOrePickaxe3x3WithNBT());
+                                OrePickaxe5x5 resultItem = new OrePickaxe5x5(this.plugin, ".1");
+                                anvilInventory.setItem(2, resultItem.getOrePickaxe5x5WithNBT());
 
-                                player.sendMessage(this.plugin.getPrefix() + "§dDu kannst die " + resultItem.getOrePickaxe3x3WithNBT().getItemMeta().getDisplayName() + " §dnoch ein Mal im Amboss benutzen!");
+                                player.sendMessage(this.plugin.getPrefix() + "§dDu kannst die " + resultItem.getOrePickaxe5x5WithNBT().getItemMeta().getDisplayName() + " §dnoch ein Mal im Amboss benutzen!");
                             } else {
                                 event.setCancelled(true);
                                 player.closeInventory();
@@ -182,10 +183,10 @@ public class OrePickaxe3x3 implements Listener, Item {
 
                         } else if (player.hasPermission("ttools.enchant.1")) {
                             if (nbtItemSlotOne.hasKey(this.nbtTag()) || nbtItemSlotTwo.hasKey(this.nbtTag())) {
-                                OrePickaxe3x3 resultItem = new OrePickaxe3x3(this.plugin, ".1");
-                                anvilInventory.setItem(2, resultItem.getOrePickaxe3x3WithNBT());
+                                OrePickaxe5x5 resultItem = new OrePickaxe5x5(this.plugin, ".1");
+                                anvilInventory.setItem(2, resultItem.getOrePickaxe5x5WithNBT());
 
-                                player.sendMessage(this.plugin.getPrefix() + "§dDu kannst die " + resultItem.getOrePickaxe3x3WithNBT().getItemMeta().getDisplayName() + " §dnicht mehr im Amboss benutzen!");
+                                player.sendMessage(this.plugin.getPrefix() + "§dDu kannst die " + resultItem.getOrePickaxe5x5WithNBT().getItemMeta().getDisplayName() + " §dnicht mehr im Amboss benutzen!");
 
                             } else if (nbtItemSlotOne.hasKey(this.nbtTag() + ".2") || nbtItemSlotTwo.hasKey(this.nbtTag() + ".2")) {
                                 event.setCancelled(true);
@@ -209,13 +210,14 @@ public class OrePickaxe3x3 implements Listener, Item {
         }
     }
 
-    public ItemStack getOrePickaxe3x3() {
-        return this.orePickaxe3x3;
+    public ItemStack getOrePickaxe5x5() {
+        return this.orePickaxe5x5;
     }
 
-    public ItemStack getOrePickaxe3x3WithNBT() {
-        return orePickaxe3x3WithNBT;
+    public ItemStack getOrePickaxe5x5WithNBT() {
+        return orePickaxe5x5WithNBT;
     }
+
 
     public BlockFace getBlockFaceByPlayerName(String name) {
         return faces.get(name);
