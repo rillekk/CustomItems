@@ -74,7 +74,7 @@ public class TimberAxe implements Item, Listener {
 
 
     @EventHandler
-    public void onBreak(BlockBreakEvent event) {
+    public void onBreak(BlockBreakEvent event) throws InterruptedException {
 
         if (event.getBlock().getType().equals(Material.LOG) || event.getBlock().getType().equals(Material.LOG_2)) {
             Player player = event.getPlayer();
@@ -85,7 +85,7 @@ public class TimberAxe implements Item, Listener {
 
                 if (nbtItem.hasKey(nbtTag) || nbtItem.hasKey(nbtTag + ".1") || nbtItem.hasKey(nbtTag + ".2")) {
                     event.setCancelled(true);
-                    new FellingTree(event.getBlock().getLocation());
+                    new FellingTree(this.plugin, event.getBlock().getLocation());
                 }
             }
         }
