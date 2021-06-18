@@ -73,6 +73,7 @@ public class CustomItems extends JavaPlugin {
         getConfig().addDefault("orePickaxe3x3Cost", 100);
         getConfig().addDefault("orePickaxe5x5Cost", 100);
         getConfig().addDefault("timberAxeCost", 100);
+        getConfig().addDefault("maxRepairCost", 100);
         getConfig().options().copyDefaults(true);
         saveConfig();
 
